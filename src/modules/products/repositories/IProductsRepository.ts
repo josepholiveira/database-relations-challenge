@@ -1,3 +1,3 @@
-import Products from '../infra/typeorm/entities/Products';
+import Product from '../infra/typeorm/entities/Product';
 
 export default interface IProductsRepository {}

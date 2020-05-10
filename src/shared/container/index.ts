@@ -1,15 +1,15 @@
 import { container } from 'tsyringe';
 
-// import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
-// import AppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentsRepository';
+import ICustomersRepository from '@modules/customers/repositories/ICustomersRepository';
+import CustomersRepository from '@modules/customers/infra/typeorm/repositories/CustomersRepository';
 
 // import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 // import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 
-// container.registerSingleton<IAppointmentsRepository>(
-//   'AppointmentsRepository',
-//   AppointmentsRepository,
-// );
+container.registerSingleton<ICustomersRepository>(
+  'CustomersRepository',
+  CustomersRepository,
+);
 
 // container.registerSingleton<IUsersRepository>(
 //   'UsersRepository',

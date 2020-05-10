@@ -1,13 +1,13 @@
 import { getRepository, Repository } from 'typeorm';
 
 import IProductsRepository from '@modules/products/repositories/IProductsRepository';
-import Products from '../entities/Products';
+import Product from '../entities/Product';
 
 class ProductsRepository implements IProductsRepository {
-  private ormRepository: Repository<Products>;
+  private ormRepository: Repository<Product>;
 
   constructor() {
-    this.ormRepository = getRepository(Products);
+    this.ormRepository = getRepository(Product);
   }
 }
 

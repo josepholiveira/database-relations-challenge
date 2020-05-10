@@ -1,3 +1,3 @@
-import Orders from '../infra/typeorm/entities/Orders';
+import Order from '../infra/typeorm/entities/Order';
 
 export default interface IOrdersRepository {}

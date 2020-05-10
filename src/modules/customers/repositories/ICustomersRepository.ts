@@ -1,3 +1,8 @@
-import Customers from '../infra/typeorm/entities/Customers';
+import Customer from '../infra/typeorm/entities/Customer';
 
-export default interface IAppointmentsRepository {}
+import ICreateCustomerDTO from '../dtos/ICreateCustomerDTO';
+
+export default interface ICustomersRepository {
+  create(data: ICreateCustomerDTO): Promise<Customer>;
+  findByEmail(email: string): Promise<Customer | undefined>;
+}
