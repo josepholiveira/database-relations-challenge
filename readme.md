@@ -2,6 +2,7 @@
 | --------- | ------- |
 | id        | UUID    |
 | name      | varchar |
+| email     | varchar |
 
 | products |               |
 | -------- | ------------- |
