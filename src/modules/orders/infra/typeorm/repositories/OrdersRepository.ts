@@ -1,6 +1,7 @@
 import { getRepository, Repository } from 'typeorm';
 
 import IOrdersRepository from '@modules/orders/repositories/IOrdersRepository';
+import ICreateOrderDTO from '@modules/orders/dtos/ICreateOrderDTO';
 import Order from '../entities/Order';
 
 class OrdersRepository implements IOrdersRepository {
@@ -8,6 +9,17 @@ class OrdersRepository implements IOrdersRepository {
 
   constructor() {
     this.ormRepository = getRepository(Order);
+  }
+
+  public async create({ customer, products }: ICreateOrderDTO): Promise<Order> {
+    const order = this.ormRepository.create({
+      customer,
+      order_products: products,
+    });
+
+    await this.ormRepository.save(order);
+
+    return order;
   }
 }
 

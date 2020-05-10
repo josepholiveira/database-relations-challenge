@@ -1,8 +1,12 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Repository, In } from 'typeorm';
 
 import IProductsRepository from '@modules/products/repositories/IProductsRepository';
 import ICreateProductDTO from '@modules/products/dtos/ICreateProductDTO';
 import Product from '../entities/Product';
+
+interface IFindProducts {
+  id: string;
+}
 
 class ProductsRepository implements IProductsRepository {
   private ormRepository: Repository<Product>;
@@ -35,6 +39,18 @@ class ProductsRepository implements IProductsRepository {
     });
 
     return findProduct;
+  }
+
+  public async findAllById(products: IFindProducts[]): Promise<Product[]> {
+    const productIds = products.map(product => product.id);
+
+    const existentProducts = await this.ormRepository.find({
+      where: {
+        id: In(productIds),
+      },
+    });
+
+    return existentProducts;
   }
 }
 

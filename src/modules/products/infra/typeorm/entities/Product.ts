@@ -23,8 +23,8 @@ class Product {
   @Column('int')
   quantity: number;
 
-  @OneToMany(() => OrdersToProducts, orderToProducts => orderToProducts.product)
-  orderToProducts: OrdersToProducts[];
+  @OneToMany(() => OrdersToProducts, order_products => order_products.product)
+  order_products: OrdersToProducts[];
 
   @CreateDateColumn()
   created_at: Date;
