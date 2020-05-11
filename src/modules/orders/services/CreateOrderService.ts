@@ -87,7 +87,7 @@ class CreateProductService {
         product.quantity,
     }));
 
-    this.productsRepository.updateQuantity(orderedProductsQuantity);
+    await this.productsRepository.updateQuantity(orderedProductsQuantity);
 
     return order;
   }

@@ -21,6 +21,14 @@ class OrdersRepository implements IOrdersRepository {
 
     return order;
   }
+
+  public async findById(id: string): Promise<Order | undefined> {
+    const order = this.ormRepository.findOne(id, {
+      relations: ['order_products', 'customer'],
+    });
+
+    return order;
+  }
 }
 
 export default OrdersRepository;
