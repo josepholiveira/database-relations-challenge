@@ -43,11 +43,14 @@ class CreateProductService {
       throw new AppError('Could not find any products with the given ids');
     }
 
-    const existentProductsIds = existentProducts.map(
-      (product: IProduct) => product.id,
-    );
+    const existentProductsIds = existentProducts.map(product => product.id);
 
     const filteredProducts = products
+      .filter(
+        product =>
+          existentProducts.filter(p => p.id === product.id)[0].quantity >=
+          product.quantity,
+      )
       .filter(product => existentProductsIds.includes(product.id))
       .filter((value, index, self) => self.indexOf(value) === index);
 
@@ -61,6 +64,17 @@ class CreateProductService {
       customer: customerExists,
       products: formattedProducts,
     });
+
+    const { order_products } = order;
+
+    const orderedProductsQuantity = order_products.map(product => ({
+      id: product.product_id,
+      quantity:
+        existentProducts.filter(p => p.id === product.product_id)[0].quantity -
+        product.quantity,
+    }));
+
+    this.productsRepository.updateQuantity(orderedProductsQuantity);
 
     return order;
   }
