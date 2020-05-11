@@ -1,7 +1,7 @@
 <img alt="GoStack" src="https://storage.googleapis.com/golden-wind/bootcamp-gostack/header-desafios.png" />
 
 <h3 align="center">
-  Desafio 06: Relacionamentos com banco de dados no Node.js
+  Desafio 09: Relacionamentos com banco de dados no Node.js
 </h3>
 
 <p align="center">“Mude você e todo o resto mudará naturalmente”!</blockquote>
