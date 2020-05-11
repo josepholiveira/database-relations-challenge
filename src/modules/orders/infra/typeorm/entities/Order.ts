@@ -6,6 +6,7 @@ import {
   OneToOne,
   JoinColumn,
   OneToMany,
+  Column,
 } from 'typeorm';
 
 import Customer from '@modules/customers/infra/typeorm/entities/Customer';
@@ -21,7 +22,7 @@ class Order {
   customer: Customer;
 
   @OneToMany(() => OrdersToProducts, order_products => order_products.order, {
-    cascade: ['insert'],
+    cascade: true,
   })
   order_products: OrdersToProducts[];
 

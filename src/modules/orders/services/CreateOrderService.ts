@@ -7,14 +7,14 @@ import ICustomersRepository from '@modules/customers/repositories/ICustomersRepo
 import Order from '../infra/typeorm/entities/Order';
 import IOrdersRepository from '../repositories/IOrdersRepository';
 
-interface IProducts {
+interface IProduct {
   id: string;
   quantity: number;
 }
 
 interface IRequest {
   customer_id: string;
-  products: IProducts[];
+  products: IProduct[];
 }
 
 @injectable()
@@ -43,9 +43,23 @@ class CreateProductService {
       throw new AppError('Could not find any products with the given ids');
     }
 
+    const existentProductsIds = existentProducts.map(
+      (product: IProduct) => product.id,
+    );
+
+    const filteredProducts = products
+      .filter(product => existentProductsIds.includes(product.id))
+      .filter((value, index, self) => self.indexOf(value) === index);
+
+    const formattedProducts = filteredProducts.map(product => ({
+      product_id: product.id,
+      quantity: product.quantity,
+      price: existentProducts.filter(p => p.id === product.id)[0].price,
+    }));
+
     const order = await this.ordersRepository.create({
       customer: customerExists,
-      products: existentProducts,
+      products: formattedProducts,
     });
 
     return order;
