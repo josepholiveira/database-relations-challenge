@@ -2,6 +2,7 @@ import { getRepository, Repository, In } from 'typeorm';
 
 import IProductsRepository from '@modules/products/repositories/IProductsRepository';
 import ICreateProductDTO from '@modules/products/dtos/ICreateProductDTO';
+import IUpdateProductsQuantityDTO from '@modules/products/dtos/IUpdateProductsQuantityDTO';
 import Product from '../entities/Product';
 
 interface IFindProducts {
@@ -51,6 +52,12 @@ class ProductsRepository implements IProductsRepository {
     });
 
     return existentProducts;
+  }
+
+  public async updateQuantity(
+    products: IUpdateProductsQuantityDTO[],
+  ): Promise<Product[]> {
+    return this.ormRepository.save(products);
   }
 }
 

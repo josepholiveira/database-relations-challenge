@@ -43,15 +43,31 @@ class CreateProductService {
       throw new AppError('Could not find any products with the given ids');
     }
 
-    const existentProductsIds = existentProducts.map(
-      (product: IProduct) => product.id,
+    const existentProductsIds = existentProducts.map(product => product.id);
+
+    const checkInexistentProducts = products.filter(
+      product => !existentProductsIds.includes(product.id),
     );
 
-    const filteredProducts = products
-      .filter(product => existentProductsIds.includes(product.id))
-      .filter((value, index, self) => self.indexOf(value) === index);
+    if (checkInexistentProducts.length) {
+      throw new AppError(
+        `Could not find product ${checkInexistentProducts[0].id}`,
+      );
+    }
 
-    const formattedProducts = filteredProducts.map(product => ({
+    const findProductsWithNoQuantityAvailable = products.filter(
+      product =>
+        existentProducts.filter(p => p.id === product.id)[0].quantity <=
+        product.quantity,
+    );
+
+    if (findProductsWithNoQuantityAvailable.length) {
+      throw new AppError(
+        `The quantity ${findProductsWithNoQuantityAvailable[0].quantity} is not available for ${findProductsWithNoQuantityAvailable[0].id}`,
+      );
+    }
+
+    const formattedProducts = products.map(product => ({
       product_id: product.id,
       quantity: product.quantity,
       price: existentProducts.filter(p => p.id === product.id)[0].price,
@@ -61,6 +77,17 @@ class CreateProductService {
       customer: customerExists,
       products: formattedProducts,
     });
+
+    const { order_products } = order;
+
+    const orderedProductsQuantity = order_products.map(product => ({
+      id: product.product_id,
+      quantity:
+        existentProducts.filter(p => p.id === product.product_id)[0].quantity -
+        product.quantity,
+    }));
+
+    this.productsRepository.updateQuantity(orderedProductsQuantity);
 
     return order;
   }
