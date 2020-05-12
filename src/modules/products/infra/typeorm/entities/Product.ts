@@ -7,7 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 
-import OrdersToProducts from '@modules/orders_products/infra/typeorm/entities/OrdersToProducts';
+import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProducts';
 
 @Entity('products')
 class Product {
@@ -23,8 +23,8 @@ class Product {
   @Column('int')
   quantity: number;
 
-  @OneToMany(() => OrdersToProducts, order_products => order_products.product)
-  order_products: OrdersToProducts[];
+  @OneToMany(() => OrdersProducts, order_products => order_products.product)
+  order_products: OrdersProducts[];
 
   @CreateDateColumn()
   created_at: Date;

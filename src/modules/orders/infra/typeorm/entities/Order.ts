@@ -6,11 +6,10 @@ import {
   OneToOne,
   JoinColumn,
   OneToMany,
-  Column,
 } from 'typeorm';
 
 import Customer from '@modules/customers/infra/typeorm/entities/Customer';
-import OrdersToProducts from '@modules/orders_products/infra/typeorm/entities/OrdersToProducts';
+import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProducts';
 
 @Entity('orders')
 class Order {
@@ -21,10 +20,10 @@ class Order {
   @JoinColumn({ name: 'customer_id' })
   customer: Customer;
 
-  @OneToMany(() => OrdersToProducts, order_products => order_products.order, {
+  @OneToMany(() => OrdersProducts, order_products => order_products.order, {
     cascade: true,
   })
-  order_products: OrdersToProducts[];
+  order_products: OrdersProducts[];
 
   @CreateDateColumn()
   created_at: Date;
