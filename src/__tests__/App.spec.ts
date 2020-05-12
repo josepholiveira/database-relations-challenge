@@ -27,7 +27,6 @@ describe('App', () => {
     await connection.query('DELETE FROM orders');
     await connection.query('DELETE FROM products');
     await connection.query('DELETE FROM customers');
-    await connection.query('DELETE FROM migrations');
   });
 
   afterAll(async () => {
